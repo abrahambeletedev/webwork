@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-gray-light: #f5f5f5;
+  --color-brand-gray-mid: #a3a3a3;
+  --color-brand-gray-dark: #3f3f46;
+  --color-bg-dark: #000000;
+  --color-card-dark: rgba(15, 15, 15, 0.4);
+  --color-card-hover: rgba(25, 25, 25, 0.6);
+  --color-card-border: rgba(255, 255, 255, 0.05);
+  --color-card-border-hover: rgba(255, 255, 255, 0.25);
+  --color-spotlight: rgba(255, 255, 255, 0.03);
+}
+
+@layer base {
+  body {
+    background-color: var(--color-bg-dark);
+    color: #e5e5e5;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: #ffffff;
+    color: #000000;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-space-grotesk), sans-serif;
+  }
+
+  .text-glow {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  }
+  
+  .glass {
+    background: var(--color-card-dark);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--color-card-border);
+  }
+
+  .glass-hover:hover {
+    background: var(--color-card-hover);
+    border-color: var(--color-card-border-hover);
+  }
+  
+  .text-gradient {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(to right, #ffffff, #888888);
+  }
+  
+  .bg-gradient-mesh {
+    /* Keeping the class but making it invisible or extremely subtle grayscale to fulfill black/white aesthetic */
+    background-image: none;
+  }
+}
