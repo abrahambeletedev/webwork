@@ -87,23 +87,45 @@ const ProjectGallery = () => {
                     </div>
                   </div>
 
-                  {/* Scrolling Content */}
+                  {/* Scrolling Content / Demo Preview */}
                   <div className="absolute inset-0 pt-10 overflow-hidden">
                     {project.image_url ? (
                       <motion.img
                         src={project.image_url}
                         alt={project.title}
                         initial={{ y: "0%" }}
-                        whileHover={{ y: "-65%" }}
+                        whileHover={{ y: project.demo_url ? "0%" : "-65%" }}
                         transition={{ 
                           duration: 8, 
                           ease: "linear"
                         }}
-                        className="w-full h-auto object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-[filter,opacity] duration-700"
+                        className={`w-full h-auto object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-[filter,opacity] duration-700 ${project.demo_url ? 'group-hover:opacity-0' : ''}`}
                       />
                     ) : (
                       <div className="w-full h-full bg-white/5 flex items-center justify-center">
                         <span className="text-gray-600 text-xs uppercase tracking-widest">No Preview Available</span>
+                      </div>
+                    )}
+
+                    {/* Live Demo Overlay */}
+                    {project.demo_url && (
+                      <div className="absolute inset-0 pt-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                        {project.demo_url.match(/\.(mp4|webm|ogg)$/i) ? (
+                          <video
+                            src={project.demo_url}
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <img
+                            src={project.demo_url}
+                            alt={`${project.title} demo`}
+                            className="w-full h-full object-cover"
+                          />
+                        )}
                       </div>
                     )}
                   </div>

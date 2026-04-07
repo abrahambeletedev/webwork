@@ -33,6 +33,7 @@ export async function addProject(formData: FormData) {
   const title = formData.get('title') as string;
   const description = formData.get('description') as string;
   const image_url = formData.get('image_url') as string;
+  const demo_url = formData.get('demo_url') as string;
   const github_url = formData.get('github_url') as string;
   const live_url = formData.get('live_url') as string;
   const size = formData.get('size') as string;
@@ -41,6 +42,7 @@ export async function addProject(formData: FormData) {
     title,
     description: description || null,
     image_url: image_url || null,
+    demo_url: demo_url || null,
     github_url: github_url || null,
     live_url: live_url || null,
     size: size || 'small',
@@ -48,6 +50,37 @@ export async function addProject(formData: FormData) {
 
   if (error) {
     console.error('Error adding project:', error);
+    return { success: false, error: error.message };
+  }
+  return { success: true };
+}
+
+export async function updateProject(id: string, formData: FormData) {
+  const supabase = getServerSupabase();
+  
+  const title = formData.get('title') as string;
+  const description = formData.get('description') as string;
+  const image_url = formData.get('image_url') as string;
+  const demo_url = formData.get('demo_url') as string;
+  const github_url = formData.get('github_url') as string;
+  const live_url = formData.get('live_url') as string;
+  const size = formData.get('size') as string;
+
+  const { error } = await supabase
+    .from('projects')
+    .update({
+      title,
+      description: description || null,
+      image_url: image_url || null,
+      demo_url: demo_url || null,
+      github_url: github_url || null,
+      live_url: live_url || null,
+      size: size || 'small',
+    })
+    .eq('id', id);
+
+  if (error) {
+    console.error('Error updating project:', error);
     return { success: false, error: error.message };
   }
   return { success: true };

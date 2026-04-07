@@ -88,16 +88,37 @@ const ProjectQuickLook: React.FC<ProjectQuickLookProps> = ({ project, onClose })
                       </div>
                     </div>
 
-                    <div className="absolute inset-0 pt-10 overflow-auto scrollbar-hide">
-                      {project.image_url ? (
-                        <motion.img
-                          src={project.image_url}
-                          alt={project.title}
-                          className="w-full h-auto object-cover"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.2 }}
-                        />
+                    <div className="absolute inset-0 pt-10 overflow-hidden bg-black/40 backdrop-blur-sm">
+                      {project.demo_url ? (
+                        <div className="w-full h-full">
+                          {project.demo_url.match(/\.(mp4|webm|ogg)$/i) ? (
+                            <video
+                              src={project.demo_url}
+                              autoPlay
+                              muted
+                              loop
+                              playsInline
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <img
+                              src={project.demo_url}
+                              alt={`${project.title} live demo`}
+                              className="w-full h-full object-cover"
+                            />
+                          )}
+                        </div>
+                      ) : project.image_url ? (
+                        <div className="overflow-auto scrollbar-hide h-full">
+                          <motion.img
+                            src={project.image_url}
+                            alt={project.title}
+                            className="w-full h-auto object-cover"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.2 }}
+                          />
+                        </div>
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-gray-600 uppercase tracking-widest text-xs">
                           No Preview Available
