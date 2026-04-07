@@ -60,7 +60,8 @@ export default function AdminPage() {
       setEditingProject(null);
       await fetchProjects();
     } else {
-      setError(result.error || 'Failed to save project');
+      console.error('Project save error:', result.error);
+      setError(`Error: ${result.error || 'Failed to save project'}`);
     }
     setSubmitting(false);
   };
@@ -191,6 +192,19 @@ export default function AdminPage() {
                <h2 className="text-2xl font-bold text-white font-display mb-6">
                 {editingProject ? 'Edit Project' : 'New Project'}
               </h2>
+
+              <AnimatePresence>
+                {error && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-medium leading-relaxed"
+                  >
+                    {error}
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               <form action={handleSubmitProject} key={editingProject?.id || 'new'} className="space-y-4">
                 <div>
