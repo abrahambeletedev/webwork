@@ -24,7 +24,7 @@ const letter = {
 
 const Hero = () => {
   return (
-    <section className="relative w-full flex flex-col items-center justify-center min-h-screen text-center px-6 sm:px-8 md:px-12 overflow-hidden">
+    <section className="relative w-full flex flex-col items-center justify-center min-h-screen text-center px-4 sm:px-8 md:px-12 overflow-hidden">
       
       {/* Background handled dynamically by layout's DynamicBackground component */}
 
@@ -49,10 +49,10 @@ const Hero = () => {
           className="overflow-hidden mb-2"
         >
           <motion.h1
-            className="text-7xl md:text-9xl font-black text-white font-display leading-none tracking-tighter"
+            className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-black text-white font-display leading-[0.9] tracking-tighter"
           >
             {"UNIMITY".split("").map((char, index) => (
-              <motion.span key={char + "-" + index} variants={letter} className="inline-block">
+              <motion.span key={char + "-" + index} variants={letter} className="inline-block px-0.5">
                 {char}
               </motion.span>
             ))}
@@ -63,7 +63,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-2xl md:text-4xl text-gray-500 font-display tracking-tight mb-8"
+          className="text-xl md:text-4xl text-gray-500 font-display tracking-tight mb-8"
         >
           Design & <span className="text-white">Engineering</span> Studio
         </motion.h2>
@@ -72,7 +72,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="text-lg md:text-xl text-gray-400 mb-12 max-w-2xl font-light leading-relaxed"
+          className="text-base md:text-xl text-gray-400 mb-12 max-w-2xl font-light leading-relaxed"
         >
           We design and ship <span className="text-white font-normal">high-converting websites</span>, web apps, and brand identities for startups and founders who want to stand out — in weeks, not months.
         </motion.p>
@@ -84,7 +84,7 @@ const Hero = () => {
           className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
         >
           <a
-            href="mailto:hello@eyoas.com?subject=Project%20Inquiry"
+            href="mailto:abraham.belete.dev@gmail.com?subject=Project%20Inquiry"
             className="group px-8 py-4 rounded-full bg-white text-bg-dark font-semibold text-lg hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] inline-flex items-center justify-center gap-2.5"
           >
             <Mail className="w-5 h-5" />

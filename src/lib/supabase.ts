@@ -11,6 +11,7 @@ export type Project = {
   description: string | null;
   image_url: string | null;
   github_url: string | null;
+  live_url: string | null;
   size: 'small' | 'large';
   created_at: string;
 };

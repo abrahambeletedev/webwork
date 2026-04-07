@@ -34,6 +34,7 @@ export async function addProject(formData: FormData) {
   const description = formData.get('description') as string;
   const image_url = formData.get('image_url') as string;
   const github_url = formData.get('github_url') as string;
+  const live_url = formData.get('live_url') as string;
   const size = formData.get('size') as string;
 
   const { error } = await supabase.from('projects').insert({
@@ -41,6 +42,7 @@ export async function addProject(formData: FormData) {
     description: description || null,
     image_url: image_url || null,
     github_url: github_url || null,
+    live_url: live_url || null,
     size: size || 'small',
   });
 

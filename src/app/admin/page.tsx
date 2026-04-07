@@ -217,6 +217,17 @@ export default function AdminPage() {
                 </div>
 
                 <div>
+                  <label className="block text-xs text-gray-500 uppercase tracking-widest mb-2 font-medium">
+                    <span className="flex items-center gap-1.5"><ExternalLink className="w-3 h-3" /> Live URL</span>
+                  </label>
+                  <input
+                    name="live_url"
+                    placeholder="https://my-project.vercel.app"
+                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-white/25 transition-all duration-300 text-sm"
+                  />
+                </div>
+
+                <div>
                   <label className="block text-xs text-gray-500 uppercase tracking-widest mb-2 font-medium">Card Size</label>
                   <select
                     name="size"
