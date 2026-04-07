@@ -150,7 +150,10 @@ export default function AdminPage() {
           </div>
           <div className="flex items-center gap-3">
             <button
-              onClick={() => setFormOpen(true)}
+              onClick={() => {
+                setEditingProject(null);
+                setFormOpen(true);
+              }}
               className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-black font-semibold text-sm hover:bg-gray-100 transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]"
             >
               <Plus className="w-4 h-4" />
@@ -189,7 +192,7 @@ export default function AdminPage() {
                 {editingProject ? 'Edit Project' : 'New Project'}
               </h2>
 
-              <form action={handleSubmitProject} className="space-y-4">
+              <form action={handleSubmitProject} key={editingProject?.id || 'new'} className="space-y-4">
                 <div>
                   <label className="block text-xs text-gray-500 uppercase tracking-widest mb-2 font-medium">Title *</label>
                   <input
@@ -315,7 +318,10 @@ export default function AdminPage() {
             <h3 className="text-xl text-white font-display mb-2">No projects yet</h3>
             <p className="text-gray-500 text-sm mb-6">Add your first project to get started</p>
             <button
-              onClick={() => setFormOpen(true)}
+              onClick={() => {
+                setEditingProject(null);
+                setFormOpen(true);
+              }}
               className="px-6 py-3 rounded-xl bg-white text-black font-semibold text-sm hover:bg-gray-100 transition-all duration-300"
             >
               Add Project
