@@ -9,6 +9,7 @@ export type Project = {
   id: string;
   title: string;
   description: string | null;
+  client_impact: string | null;
   image_url: string | null;
   github_url: string | null;
   live_url: string | null;

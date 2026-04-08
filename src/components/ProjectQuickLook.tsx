@@ -36,7 +36,7 @@ const ProjectQuickLook: React.FC<ProjectQuickLookProps> = ({ project, onClose })
   return (
     <AnimatePresence mode="wait">
       {project && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center pointer-events-none">
+        <motion.div key="quick-look-modal" className="fixed inset-0 z-[100] flex items-center justify-center pointer-events-none">
           {/* Backdrop */}
           <motion.div
             className="absolute inset-0 bg-black/80 backdrop-blur-xl pointer-events-auto"
@@ -123,6 +123,18 @@ const ProjectQuickLook: React.FC<ProjectQuickLookProps> = ({ project, onClose })
                   {project.description}
                 </p>
 
+                {project.client_impact && (
+                  <div className="mb-12 p-8 rounded-3xl bg-gradient-to-br from-white/10 to-transparent border border-white/10">
+                    <h4 className="text-sm uppercase tracking-[0.2em] text-white mb-4 font-bold flex items-center gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
+                      Client Impact
+                    </h4>
+                    <p className="text-gray-300 text-base leading-relaxed">
+                      {project.client_impact}
+                    </p>
+                  </div>
+                )}
+
 
 
                 {/* Call to Actions */}
@@ -153,7 +165,7 @@ const ProjectQuickLook: React.FC<ProjectQuickLookProps> = ({ project, onClose })
               </div>
             </div>
           </motion.div>
-        </div>
+          </motion.div>
       )}
     </AnimatePresence>
   );
