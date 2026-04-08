@@ -36,181 +36,154 @@ const ProjectQuickLook: React.FC<ProjectQuickLookProps> = ({ project, onClose })
   return (
     <AnimatePresence mode="wait">
       {project && (
-        <motion.div
-          key="modal-overlay"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-12"
-          onClick={onClose}
-        >
-          {/* Backdrop with sophisticated blur */}
+        <div className="fixed inset-0 z-[100] flex items-center justify-center pointer-events-none">
+          {/* Backdrop */}
           <motion.div
-            className="absolute inset-0 bg-black/90 backdrop-blur-[20px]"
+            className="absolute inset-0 bg-black/80 backdrop-blur-xl pointer-events-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            onClick={onClose}
           />
 
-          {/* Modal Container */}
+          {/* Fixed Close Button */}
           <motion.div
-            key={project.id}
-            initial={{ opacity: 0, scale: 0.9, y: 40 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300, mass: 0.8 }}
-            className="relative w-full max-w-5xl max-h-[90vh] flex flex-col bg-bg-dark/80 rounded-[2.5rem] overflow-hidden border border-white/10 shadow-[0_0_100px_rgba(0,0,0,0.8)]"
-            onClick={(e) => e.stopPropagation()}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ delay: 0.1 }}
+            className="fixed top-4 right-4 md:top-8 md:right-8 z-[110] pointer-events-auto"
           >
-            {/* Header / Top Bar */}
-            <div className="absolute top-6 right-6 z-[60] flex items-center gap-4">
-              <button
-                onClick={onClose}
-                className="w-12 h-12 rounded-full glass border border-white/10 flex items-center justify-center text-gray-500 hover:text-white hover:border-white/30 transition-all duration-300"
-                aria-label="Close"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
+            <button
+              onClick={onClose}
+              className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-300 shadow-xl"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </motion.div>
 
-            <div className="flex flex-col lg:flex-row h-full overflow-y-auto lg:overflow-hidden">
-              {/* Image Column - Uses scrolling preview logic consistent with gallery */}
-              <div className="w-full lg:w-[60%] h-[400px] lg:h-full bg-white/2 overflow-hidden border-b lg:border-b-0 lg:border-r border-white/10">
-                <div className="relative w-full h-full p-6 lg:p-10">
-                  <div className="relative w-full h-full rounded-2xl overflow-hidden glass border border-white/10 shadow-2xl group/mockup">
-                    {/* Mockup dots */}
-                    <div className="absolute top-0 left-0 right-0 h-10 bg-black/40 backdrop-blur-md border-b border-white/5 z-20 flex items-center px-5 flex-shrink-0">
-                      <div className="flex gap-1.5">
-                        <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
-                        <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
-                        <div className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
-                      </div>
-                    </div>
-
-                    <div className="absolute inset-0 pt-10 overflow-hidden bg-black/40 backdrop-blur-sm">
-                      {project.demo_url ? (
-                        <div className="w-full h-full">
-                          {project.demo_url.match(/\.(mp4|webm|ogg)$/i) ? (
-                            <video
-                              src={project.demo_url}
-                              autoPlay
-                              muted
-                              loop
-                              playsInline
-                              className="w-full h-full object-cover"
-                            />
-                          ) : (
-                            <img
-                              src={project.demo_url}
-                              alt={`${project.title} live demo`}
-                              className="w-full h-full object-cover"
-                            />
-                          )}
-                        </div>
-                      ) : project.image_url ? (
-                        <div className="overflow-auto scrollbar-hide h-full">
-                          <motion.img
-                            src={project.image_url}
-                            alt={project.title}
-                            className="w-full h-auto object-cover"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.2 }}
-                          />
-                        </div>
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-gray-600 uppercase tracking-widest text-xs">
-                          No Preview Available
-                        </div>
-                      )}
-                    </div>
+          {/* Scrollable Container for the Card */}
+          <motion.div
+            initial={{ opacity: 0, y: "100%" }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: "100%" }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="absolute inset-x-0 bottom-0 top-16 md:top-auto md:relative md:w-[90vw] md:max-w-6xl md:h-[85vh] flex justify-center pointer-events-auto"
+          >
+            <div className="w-full h-full bg-[#0a0a0a] md:rounded-[2.5rem] rounded-t-[2.5rem] overflow-y-auto hide-scrollbar shadow-[0_-20px_100px_rgba(0,0,0,0.8)] border border-white/10 relative pb-10">
+              
+              {/* Media Header */}
+              <div className="relative w-full h-[40vh] md:h-[50vh] bg-neutral-900 overflow-hidden">
+                {project.demo_url ? (
+                  project.demo_url.match(/\.(mp4|webm|ogg)$/i) ? (
+                    <video
+                      src={project.demo_url}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="w-full h-full object-cover opacity-90"
+                    />
+                  ) : (
+                    <img
+                      src={project.demo_url}
+                      alt={`${project.title} live demo`}
+                      className="w-full h-full object-cover opacity-90"
+                    />
+                  )
+                ) : project.image_url ? (
+                  <img
+                    src={project.image_url}
+                    alt={project.title}
+                    className="w-full h-full object-cover opacity-90"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-gray-600 uppercase tracking-widest text-sm">
+                    No Preview Available
                   </div>
-                </div>
+                )}
+                
+                {/* Gradient Overlay for seamless blend to content */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent" />
+                
+                {/* Card Top Pill (Mobile only hint) */}
+                <div className="absolute top-4 left-1/2 -translate-x-1/2 w-12 h-1.5 rounded-full bg-white/20 md:hidden" />
               </div>
 
-              {/* Text / Actions Column */}
-              <div className="flex-1 p-8 lg:p-14 flex flex-col justify-center relative">
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.1, duration: 0.5 }}
-                >
-                  <span className="text-xs uppercase tracking-[0.3em] font-bold text-gray-600 mb-6 block">Case Study</span>
-                  <h2 className="text-4xl lg:text-6xl font-bold text-white font-display mb-8 tracking-tighter leading-tight italic">
-                    {project.title}
-                  </h2>
-                  <p className="text-gray-400 text-lg lg:text-xl leading-relaxed mb-8 font-light">
-                    {project.description}
-                  </p>
+              {/* Content Body */}
+              <div className="max-w-4xl mx-auto px-6 md:px-12 -mt-16 relative z-10">
+                <span className="text-xs md:text-sm uppercase tracking-[0.3em] font-bold text-gray-400 mb-4 block">
+                  Quick Look
+                </span>
+                <h2 className="text-4xl md:text-6xl font-bold text-white font-display mb-6 tracking-tight leading-tight">
+                  {project.title}
+                </h2>
+                
+                <p className="text-gray-300 text-lg md:text-xl leading-relaxed mb-12 font-light">
+                  {project.description}
+                </p>
 
-                  {(project.problem || project.solution) && (
-                    <div className="flex flex-col gap-6 mb-12">
-                      {project.problem && (
-                        <div className="p-6 rounded-2xl bg-red-500/5 border border-red-500/10 relative overflow-hidden group/problem">
-                          <div className="absolute top-0 left-0 w-1 h-full bg-red-500/50" />
-                          <h4 className="text-sm uppercase tracking-widest text-red-400 mb-3 font-bold flex items-center gap-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
-                            The Problem
-                          </h4>
-                          <p className="text-gray-300 text-sm leading-relaxed relative z-10">
-                            {project.problem}
-                          </p>
-                        </div>
-                      )}
-
-                      {project.solution && (
-                        <div className="p-6 rounded-2xl bg-emerald-500/5 border border-emerald-500/10 relative overflow-hidden group/solution">
-                          <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500/50" />
-                          <h4 className="text-sm uppercase tracking-widest text-emerald-400 mb-3 font-bold flex items-center gap-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                            The Solution
-                          </h4>
-                          <p className="text-gray-300 text-sm leading-relaxed relative z-10">
-                            {project.solution}
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  <div className="flex flex-wrap gap-4 pt-4 border-t border-white/5">
-                    {project.live_url && (
-                      <a
-                        href={project.live_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn-primary inline-flex items-center gap-3 px-8 py-5 rounded-2xl bg-white text-bg-dark font-black text-sm tracking-tight transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(255,255,255,0.2)] group"
-                      >
-                        Visit Website
-                        <ExternalLink className="w-4 h-4 opacity-40 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
-                      </a>
+                {(project.problem || project.solution) && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-12">
+                    {project.problem && (
+                      <div className="p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors">
+                        <h4 className="text-sm uppercase tracking-widest text-[#ff4f4f] mb-4 font-bold flex items-center gap-3">
+                          <span className="w-2 h-2 rounded-full bg-[#ff4f4f] shadow-[0_0_10px_rgba(255,79,79,0.8)]" />
+                          The Problem
+                        </h4>
+                        <p className="text-gray-400 text-base leading-relaxed">
+                          {project.problem}
+                        </p>
+                      </div>
                     )}
-                    {project.github_url && (
-                      <a
-                        href={project.github_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-3 px-8 py-5 rounded-2xl glass border border-white/10 text-white font-bold text-sm tracking-tight transition-all duration-300 hover:border-white/30 hover:bg-white/5 group"
-                      >
-                        <GithubIcon className="w-5 h-5" />
-                        Code Repository
-                      </a>
+
+                    {project.solution && (
+                      <div className="p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors">
+                        <h4 className="text-sm uppercase tracking-widest text-[#2ecc71] mb-4 font-bold flex items-center gap-3">
+                          <span className="w-2 h-2 rounded-full bg-[#2ecc71] shadow-[0_0_10px_rgba(46,204,113,0.8)]" />
+                          The Solution
+                        </h4>
+                        <p className="text-gray-400 text-base leading-relaxed">
+                          {project.solution}
+                        </p>
+                      </div>
                     )}
                   </div>
-                </motion.div>
+                )}
 
-                {/* Subtle Hint */}
-                <div className="absolute bottom-10 left-14 hidden lg:block">
-                  <span className="text-[10px] uppercase tracking-[0.5em] text-gray-700 font-bold">UNIMITY Project Portfolio</span>
+                {/* Call to Actions */}
+                <div className="flex flex-wrap gap-4 pt-8 border-t border-white/10">
+                  {project.live_url && (
+                    <a
+                      href={project.live_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-white text-black font-bold text-sm tracking-wide transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] w-full sm:w-auto"
+                    >
+                      Visit Website
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                  )}
+                  {project.github_url && (
+                    <a
+                      href={project.github_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-transparent border border-white/20 text-white font-bold text-sm tracking-wide transition-all duration-300 hover:bg-white/10 w-full sm:w-auto"
+                    >
+                      <GithubIcon className="w-5 h-5" />
+                      View Code
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
           </motion.div>
-        </motion.div>
+        </div>
       )}
     </AnimatePresence>
   );
 };
 
 export default ProjectQuickLook;
+
