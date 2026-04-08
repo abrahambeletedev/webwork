@@ -123,11 +123,7 @@ const ProjectQuickLook: React.FC<ProjectQuickLookProps> = ({ project, onClose })
                   {project.description}
                 </p>
 
-                {(project.problem || project.solution) && (
-                  <div className="hidden">
-                    {/* Problem and solution fields have been removed per user request */}
-                  </div>
-                )}
+
 
                 {/* Call to Actions */}
                 <div className="flex flex-wrap gap-4 pt-8 border-t border-white/10">
