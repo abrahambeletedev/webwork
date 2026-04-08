@@ -32,8 +32,6 @@ export async function addProject(formData: FormData) {
   
   const title = formData.get('title') as string;
   const description = formData.get('description') as string;
-  const problem = formData.get('problem') as string;
-  const solution = formData.get('solution') as string;
   const image_url = formData.get('image_url') as string;
   const demo_url = formData.get('demo_url') as string;
   const github_url = formData.get('github_url') as string;
@@ -42,8 +40,6 @@ export async function addProject(formData: FormData) {
   const { error } = await supabase.from('projects').insert({
     title,
     description: description || null,
-    problem: problem || null,
-    solution: solution || null,
     image_url: image_url || null,
     demo_url: demo_url || null,
     github_url: github_url || null,
@@ -62,8 +58,6 @@ export async function updateProject(id: string, formData: FormData) {
   
   const title = formData.get('title') as string;
   const description = formData.get('description') as string;
-  const problem = formData.get('problem') as string;
-  const solution = formData.get('solution') as string;
   const image_url = formData.get('image_url') as string;
   const demo_url = formData.get('demo_url') as string;
   const github_url = formData.get('github_url') as string;
@@ -74,8 +68,6 @@ export async function updateProject(id: string, formData: FormData) {
     .update({
       title,
       description: description || null,
-      problem: problem || null,
-      solution: solution || null,
       image_url: image_url || null,
       demo_url: demo_url || null,
       github_url: github_url || null,

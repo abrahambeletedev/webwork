@@ -232,27 +232,6 @@ export default function AdminPage() {
                       />
                     </div>
 
-                    <div>
-                      <label className="block text-xs text-gray-500 uppercase tracking-widest mb-2 font-medium">Problem Addressed</label>
-                      <textarea
-                        name="problem"
-                        rows={3}
-                        defaultValue={editingProject?.problem || ''}
-                        placeholder="What was the core problem that you were solving?"
-                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-white/25 transition-all duration-300 text-sm resize-none"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-xs text-gray-500 uppercase tracking-widest mb-2 font-medium">Solution Provided</label>
-                      <textarea
-                        name="solution"
-                        rows={3}
-                        defaultValue={editingProject?.solution || ''}
-                        placeholder="How did you solve it?"
-                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-white/25 transition-all duration-300 text-sm resize-none"
-                      />
-                    </div>
                   </div>
 
                   {/* Right Column */}

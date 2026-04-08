@@ -124,30 +124,8 @@ const ProjectQuickLook: React.FC<ProjectQuickLookProps> = ({ project, onClose })
                 </p>
 
                 {(project.problem || project.solution) && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-12">
-                    {project.problem && (
-                      <div className="p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors">
-                        <h4 className="text-sm uppercase tracking-widest text-[#ff4f4f] mb-4 font-bold flex items-center gap-3">
-                          <span className="w-2 h-2 rounded-full bg-[#ff4f4f] shadow-[0_0_10px_rgba(255,79,79,0.8)]" />
-                          The Problem
-                        </h4>
-                        <p className="text-gray-400 text-base leading-relaxed">
-                          {project.problem}
-                        </p>
-                      </div>
-                    )}
-
-                    {project.solution && (
-                      <div className="p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors">
-                        <h4 className="text-sm uppercase tracking-widest text-[#2ecc71] mb-4 font-bold flex items-center gap-3">
-                          <span className="w-2 h-2 rounded-full bg-[#2ecc71] shadow-[0_0_10px_rgba(46,204,113,0.8)]" />
-                          The Solution
-                        </h4>
-                        <p className="text-gray-400 text-base leading-relaxed">
-                          {project.solution}
-                        </p>
-                      </div>
-                    )}
+                  <div className="hidden">
+                    {/* Problem and solution fields have been removed per user request */}
                   </div>
                 )}
 
