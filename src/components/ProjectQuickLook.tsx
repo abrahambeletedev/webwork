@@ -140,9 +140,39 @@ const ProjectQuickLook: React.FC<ProjectQuickLookProps> = ({ project, onClose })
                   <h2 className="text-4xl lg:text-6xl font-bold text-white font-display mb-8 tracking-tighter leading-tight italic">
                     {project.title}
                   </h2>
-                  <p className="text-gray-400 text-lg lg:text-xl leading-relaxed mb-12 font-light">
+                  <p className="text-gray-400 text-lg lg:text-xl leading-relaxed mb-8 font-light">
                     {project.description}
                   </p>
+
+                  {(project.problem || project.solution) && (
+                    <div className="flex flex-col gap-6 mb-12">
+                      {project.problem && (
+                        <div className="p-6 rounded-2xl bg-red-500/5 border border-red-500/10 relative overflow-hidden group/problem">
+                          <div className="absolute top-0 left-0 w-1 h-full bg-red-500/50" />
+                          <h4 className="text-sm uppercase tracking-widest text-red-400 mb-3 font-bold flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
+                            The Problem
+                          </h4>
+                          <p className="text-gray-300 text-sm leading-relaxed relative z-10">
+                            {project.problem}
+                          </p>
+                        </div>
+                      )}
+
+                      {project.solution && (
+                        <div className="p-6 rounded-2xl bg-emerald-500/5 border border-emerald-500/10 relative overflow-hidden group/solution">
+                          <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500/50" />
+                          <h4 className="text-sm uppercase tracking-widest text-emerald-400 mb-3 font-bold flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                            The Solution
+                          </h4>
+                          <p className="text-gray-300 text-sm leading-relaxed relative z-10">
+                            {project.solution}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                   <div className="flex flex-wrap gap-4 pt-4 border-t border-white/5">
                     {project.live_url && (

@@ -4,7 +4,8 @@ import { createClient } from '@supabase/supabase-js';
 
 function getServerSupabase() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY!;
+  // Prefer service role key for admin actions to bypass RLS
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY!;
   return createClient(url, key);
 }
 
@@ -31,19 +32,21 @@ export async function addProject(formData: FormData) {
   
   const title = formData.get('title') as string;
   const description = formData.get('description') as string;
+  const problem = formData.get('problem') as string;
+  const solution = formData.get('solution') as string;
   const image_url = formData.get('image_url') as string;
   const demo_url = formData.get('demo_url') as string;
   const github_url = formData.get('github_url') as string;
-  const live_url = formData.get('live_url') as string;
   const size = formData.get('size') as string;
 
   const { error } = await supabase.from('projects').insert({
     title,
     description: description || null,
+    problem: problem || null,
+    solution: solution || null,
     image_url: image_url || null,
     demo_url: demo_url || null,
     github_url: github_url || null,
-    live_url: live_url || null,
     size: size || 'small',
   });
 
@@ -59,10 +62,11 @@ export async function updateProject(id: string, formData: FormData) {
   
   const title = formData.get('title') as string;
   const description = formData.get('description') as string;
+  const problem = formData.get('problem') as string;
+  const solution = formData.get('solution') as string;
   const image_url = formData.get('image_url') as string;
   const demo_url = formData.get('demo_url') as string;
   const github_url = formData.get('github_url') as string;
-  const live_url = formData.get('live_url') as string;
   const size = formData.get('size') as string;
 
   const { error } = await supabase
@@ -70,10 +74,11 @@ export async function updateProject(id: string, formData: FormData) {
     .update({
       title,
       description: description || null,
+      problem: problem || null,
+      solution: solution || null,
       image_url: image_url || null,
       demo_url: demo_url || null,
       github_url: github_url || null,
-      live_url: live_url || null,
       size: size || 'small',
     })
     .eq('id', id);

@@ -186,7 +186,7 @@ export default function AdminPage() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="w-full max-w-lg glass rounded-3xl border border-white/10 p-8"
+              className="w-full max-w-4xl max-h-[90vh] overflow-y-auto glass rounded-3xl border border-white/10 p-8"
               onClick={(e) => e.stopPropagation()}
             >
               <h2 className="text-2xl font-bold text-white font-display mb-6">
@@ -206,90 +206,120 @@ export default function AdminPage() {
                 )}
               </AnimatePresence>
 
-              <form action={handleSubmitProject} key={editingProject?.id || 'new'} className="space-y-4">
-                <div>
-                  <label className="block text-xs text-gray-500 uppercase tracking-widest mb-2 font-medium">Title *</label>
-                  <input
-                    name="title"
-                    required
-                    defaultValue={editingProject?.title || ''}
-                    placeholder="My Awesome Project"
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-white/25 transition-all duration-300 text-sm"
-                  />
+              <form action={handleSubmitProject} key={editingProject?.id || 'new'} className="flex flex-col gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Left Column */}
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-xs text-gray-500 uppercase tracking-widest mb-2 font-medium">Title *</label>
+                      <input
+                        name="title"
+                        required
+                        defaultValue={editingProject?.title || ''}
+                        placeholder="My Awesome Project"
+                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-white/25 transition-all duration-300 text-sm"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs text-gray-500 uppercase tracking-widest mb-2 font-medium">Description</label>
+                      <textarea
+                        name="description"
+                        rows={2}
+                        defaultValue={editingProject?.description || ''}
+                        placeholder="A brief description of the project..."
+                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-white/25 transition-all duration-300 text-sm resize-none"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs text-gray-500 uppercase tracking-widest mb-2 font-medium">Problem Addressed</label>
+                      <textarea
+                        name="problem"
+                        rows={3}
+                        defaultValue={editingProject?.problem || ''}
+                        placeholder="What was the core problem that you were solving?"
+                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-white/25 transition-all duration-300 text-sm resize-none"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs text-gray-500 uppercase tracking-widest mb-2 font-medium">Solution Provided</label>
+                      <textarea
+                        name="solution"
+                        rows={3}
+                        defaultValue={editingProject?.solution || ''}
+                        placeholder="How did you solve it?"
+                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-white/25 transition-all duration-300 text-sm resize-none"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Right Column */}
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-xs text-gray-500 uppercase tracking-widest mb-2 font-medium">
+                        <span className="flex items-center gap-1.5"><ImageIcon className="w-3 h-3" /> Image URL</span>
+                      </label>
+                      <input
+                        name="image_url"
+                        defaultValue={editingProject?.image_url || ''}
+                        placeholder="https://images.unsplash.com/..."
+                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-white/25 transition-all duration-300 text-sm"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs text-gray-500 uppercase tracking-widest mb-2 font-medium">
+                        <span className="flex items-center gap-1.5"><Video className="w-3 h-3" /> Demo/Video URL</span>
+                      </label>
+                      <input
+                        name="demo_url"
+                        defaultValue={editingProject?.demo_url || ''}
+                        placeholder="https://.../demo.mp4 or .gif"
+                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-white/25 transition-all duration-300 text-sm"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs text-gray-500 uppercase tracking-widest mb-2 font-medium">
+                        <span className="flex items-center gap-1.5"><GithubIcon className="w-3 h-3" /> GitHub URL</span>
+                      </label>
+                      <input
+                        name="github_url"
+                        defaultValue={editingProject?.github_url || ''}
+                        placeholder="https://github.com/username/repo"
+                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-white/25 transition-all duration-300 text-sm"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs text-gray-500 uppercase tracking-widest mb-2 font-medium">
+                        <span className="flex items-center gap-1.5"><ExternalLink className="w-3 h-3" /> Live URL</span>
+                      </label>
+                      <input
+                        name="live_url"
+                        defaultValue={editingProject?.live_url || ''}
+                        placeholder="https://my-project.vercel.app"
+                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-white/25 transition-all duration-300 text-sm"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs text-gray-500 uppercase tracking-widest mb-2 font-medium">Card Size</label>
+                      <select
+                        name="size"
+                        defaultValue={editingProject?.size || 'small'}
+                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-white/25 transition-all duration-300 text-sm appearance-none"
+                      >
+                        <option value="small" className="bg-neutral-900">Small (1 column)</option>
+                        <option value="large" className="bg-neutral-900">Large (2 columns)</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
 
-                <div>
-                  <label className="block text-xs text-gray-500 uppercase tracking-widest mb-2 font-medium">Description</label>
-                  <textarea
-                    name="description"
-                    rows={3}
-                    defaultValue={editingProject?.description || ''}
-                    placeholder="A brief description of the project..."
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-white/25 transition-all duration-300 text-sm resize-none"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs text-gray-500 uppercase tracking-widest mb-2 font-medium">
-                    <span className="flex items-center gap-1.5"><ImageIcon className="w-3 h-3" /> Image URL</span>
-                  </label>
-                  <input
-                    name="image_url"
-                    defaultValue={editingProject?.image_url || ''}
-                    placeholder="https://images.unsplash.com/..."
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-white/25 transition-all duration-300 text-sm"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs text-gray-500 uppercase tracking-widest mb-2 font-medium">
-                    <span className="flex items-center gap-1.5"><Video className="w-3 h-3" /> Demo/Video URL</span>
-                  </label>
-                  <input
-                    name="demo_url"
-                    defaultValue={editingProject?.demo_url || ''}
-                    placeholder="https://.../demo.mp4 or .gif"
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-white/25 transition-all duration-300 text-sm"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs text-gray-500 uppercase tracking-widest mb-2 font-medium">
-                    <span className="flex items-center gap-1.5"><GithubIcon className="w-3 h-3" /> GitHub URL</span>
-                  </label>
-                  <input
-                    name="github_url"
-                    defaultValue={editingProject?.github_url || ''}
-                    placeholder="https://github.com/username/repo"
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-white/25 transition-all duration-300 text-sm"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs text-gray-500 uppercase tracking-widest mb-2 font-medium">
-                    <span className="flex items-center gap-1.5"><ExternalLink className="w-3 h-3" /> Live URL</span>
-                  </label>
-                  <input
-                    name="demo_url"
-                    defaultValue={editingProject?.demo_url || ''}
-                    placeholder="https://my-project.vercel.app"
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-white/25 transition-all duration-300 text-sm"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs text-gray-500 uppercase tracking-widest mb-2 font-medium">Card Size</label>
-                  <select
-                    name="size"
-                    defaultValue={editingProject?.size || 'small'}
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-white/25 transition-all duration-300 text-sm appearance-none"
-                  >
-                    <option value="small" className="bg-neutral-900">Small (1 column)</option>
-                    <option value="large" className="bg-neutral-900">Large (2 columns)</option>
-                  </select>
-                </div>
-
-                <div className="flex gap-3 pt-4">
+                <div className="flex gap-3 pt-4 border-t border-white/10 mt-2">
                   <button
                     type="button"
                     onClick={() => {
