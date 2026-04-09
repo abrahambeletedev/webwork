@@ -302,8 +302,9 @@ export default function AdminPage() {
                         defaultValue={editingProject?.size || 'small'}
                         className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-white/25 transition-all duration-300 text-sm appearance-none"
                       >
-                        <option value="small" className="bg-neutral-900">Small (1 column)</option>
-                        <option value="large" className="bg-neutral-900">Large (2 columns)</option>
+                        <option value="small" className="bg-neutral-900">Small (1 column Bento)</option>
+                        <option value="medium" className="bg-neutral-900">Medium (2 column Bento)</option>
+                        <option value="large" className="bg-neutral-900">Large (Full span / 3 column Bento)</option>
                       </select>
                     </div>
                   </div>

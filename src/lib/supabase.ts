@@ -14,6 +14,6 @@ export type Project = {
   github_url: string | null;
   live_url: string | null;
   demo_url: string | null;
-  size: 'small' | 'large';
+  size: 'small' | 'medium' | 'large';
   created_at: string;
 };

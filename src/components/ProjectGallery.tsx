@@ -59,19 +59,31 @@ const ProjectGallery = () => {
             <a href="/admin" className="text-white underline underline-offset-4 hover:no-underline">Go to Admin Panel</a>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-            {projects.map((project, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 auto-rows-max">
+            {projects.map((project, index) => {
+              let spanClass = 'md:col-span-1 lg:col-span-1';
+              let aspectClass = 'aspect-square sm:aspect-[4/3]';
+
+              if (project.size === 'medium') {
+                spanClass = 'md:col-span-2 lg:col-span-2';
+                aspectClass = 'aspect-[4/3] sm:aspect-[16/9]';
+              } else if (project.size === 'large') {
+                spanClass = 'md:col-span-2 lg:col-span-3';
+                aspectClass = 'aspect-video lg:aspect-[21/9]';
+              }
+
+              return (
               <motion.div
                 key={project.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
-                className={`group flex flex-col ${project.size === 'large' ? 'md:col-span-2' : ''}`}
+                className={`group flex flex-col ${spanClass}`}
               >
                 {/* Browser Mockup Wrapper */}
                 <div 
-                  className="relative rounded-2xl overflow-hidden glass border border-white/10 aspect-square sm:aspect-[16/9] cursor-pointer shadow-2xl transition-all duration-500 hover:border-white/20 hover:shadow-white/5"
+                  className={`relative rounded-3xl overflow-hidden glass border border-white/10 ${aspectClass} cursor-pointer shadow-2xl transition-all duration-500 hover:border-white/20 hover:shadow-white/5`}
                   onClick={() => setSelectedProject(project)}
                 >
                   {/* Mockup Header */}
@@ -172,7 +184,8 @@ const ProjectGallery = () => {
                   </div>
                 </div>
               </motion.div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>
