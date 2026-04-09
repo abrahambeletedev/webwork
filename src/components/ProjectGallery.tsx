@@ -59,17 +59,14 @@ const ProjectGallery = () => {
             <a href="/admin" className="text-white underline underline-offset-4 hover:no-underline">Go to Admin Panel</a>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 auto-rows-max">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 auto-rows-[420px] grid-flow-dense">
             {projects.map((project, index) => {
-              let spanClass = 'md:col-span-1 lg:col-span-1';
-              let aspectClass = 'aspect-square sm:aspect-[4/3]';
+              let spanClass = 'col-span-1 row-span-1';
 
               if (project.size === 'medium') {
-                spanClass = 'md:col-span-2 lg:col-span-2';
-                aspectClass = 'aspect-[4/3] sm:aspect-[16/9]';
+                spanClass = 'md:col-span-2 row-span-1';
               } else if (project.size === 'large') {
-                spanClass = 'md:col-span-2 lg:col-span-3';
-                aspectClass = 'aspect-video lg:aspect-[21/9]';
+                spanClass = 'md:col-span-2 row-span-2';
               }
 
               return (
@@ -79,13 +76,10 @@ const ProjectGallery = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
-                className={`group flex flex-col ${spanClass}`}
+                className={`group relative rounded-[2rem] overflow-hidden glass border border-white/10 cursor-pointer shadow-2xl transition-all duration-500 hover:border-white/20 hover:shadow-white/5 flex flex-col justify-end ${spanClass}`}
+                onClick={() => setSelectedProject(project)}
               >
-                {/* Browser Mockup Wrapper */}
-                <div 
-                  className={`relative rounded-3xl overflow-hidden glass border border-white/10 ${aspectClass} cursor-pointer shadow-2xl transition-all duration-500 hover:border-white/20 hover:shadow-white/5`}
-                  onClick={() => setSelectedProject(project)}
-                >
+                {/* Browser Mockup Wrapper Background Removed - Using Flex Flex-col End */}
                   {/* Mockup Header */}
                   <div className="absolute top-0 left-0 right-0 h-10 bg-black/40 backdrop-blur-md border-b border-white/5 z-20 flex items-center px-5 shrink-0">
                     <div className="flex gap-2">
@@ -143,7 +137,8 @@ const ProjectGallery = () => {
                   </div>
 
                   {/* Hover Overlay Gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-bg-dark/80 via-transparent to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-700 z-10 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent opacity-90 z-10 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none" />
                   
                   {/* Quick Look Hint */}
                   <div className="absolute inset-0 flex items-center justify-center z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
@@ -151,38 +146,38 @@ const ProjectGallery = () => {
                       Quick Look
                     </div>
                   </div>
-                </div>
 
-                {/* Project Details */}
-                <div className="mt-8 flex flex-col sm:flex-row justify-between items-start gap-6">
-                  <div className="max-w-xl">
-                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 font-display">{project.title}</h3>
-                    <p className="text-gray-500 text-base leading-relaxed line-clamp-2">{project.description}</p>
+                  {/* Project Details */}
+                  <div className="relative z-20 p-6 md:p-8 flex flex-col gap-3">
+                    <h3 className="text-2xl md:text-3xl font-bold text-white font-display leading-tight">{project.title}</h3>
+                    <p className="text-gray-300 text-sm md:text-base line-clamp-2 leading-relaxed max-w-2xl">{project.description}</p>
+                    
+                    <div className="flex gap-3 pt-3">
+                      {project.live_url && (
+                        <a 
+                          href={project.live_url} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-300 pointer-events-auto"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                        </a>
+                      )}
+                      {project.github_url && (
+                        <a 
+                          href={project.github_url} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-300 pointer-events-auto"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <GithubIcon className="w-4 h-4" />
+                        </a>
+                      )}
+                    </div>
                   </div>
-                  
-                  <div className="flex gap-4 pt-1">
-                    {project.live_url && (
-                      <a 
-                        href={project.live_url} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-gray-500 hover:text-white hover:border-white/30 transition-all duration-300"
-                      >
-                        <ExternalLink className="w-5 h-5" />
-                      </a>
-                    )}
-                    {project.github_url && (
-                      <a 
-                        href={project.github_url} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-gray-500 hover:text-white hover:border-white/30 transition-all duration-300"
-                      >
-                        <GithubIcon className="w-5 h-5" />
-                      </a>
-                    )}
-                  </div>
-                </div>
+
               </motion.div>
               );
             })}
