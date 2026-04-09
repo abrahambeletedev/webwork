@@ -36,13 +36,17 @@ const ProjectQuickLook: React.FC<ProjectQuickLookProps> = ({ project, onClose })
   return (
     <AnimatePresence mode="wait">
       {project && (
-        <motion.div key="quick-look-modal" className="fixed inset-0 z-[100] flex items-center justify-center pointer-events-none">
+        <motion.div 
+          key="quick-look-modal" 
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-12"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+        >
           {/* Backdrop */}
-          <motion.div
-            className="absolute inset-0 bg-black/80 backdrop-blur-xl pointer-events-auto"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+          <div
+            className="absolute inset-0 bg-black/80 backdrop-blur-xl"
             onClick={onClose}
           />
 
@@ -52,7 +56,7 @@ const ProjectQuickLook: React.FC<ProjectQuickLookProps> = ({ project, onClose })
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ delay: 0.1 }}
-            className="fixed top-4 right-4 md:top-8 md:right-8 z-[110] pointer-events-auto"
+            className="fixed top-4 right-4 md:top-8 md:right-8 z-[110]"
           >
             <button
               onClick={onClose}
@@ -68,9 +72,10 @@ const ProjectQuickLook: React.FC<ProjectQuickLookProps> = ({ project, onClose })
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: "100%" }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="absolute inset-x-0 bottom-0 top-16 md:top-auto md:relative md:w-[90vw] md:max-w-6xl md:h-[85vh] flex justify-center pointer-events-auto"
+            className="relative w-full max-w-6xl max-h-[90vh] md:h-[85vh] flex justify-center z-10"
+            onClick={(e) => e.stopPropagation()}
           >
-            <div className="w-full h-full bg-[#0a0a0a] md:rounded-[2.5rem] rounded-t-[2.5rem] overflow-y-auto hide-scrollbar shadow-[0_-20px_100px_rgba(0,0,0,0.8)] border border-white/10 relative pb-10">
+            <div className="w-full h-full bg-[#0a0a0a] rounded-[2.5rem] overflow-y-auto hide-scrollbar shadow-[0_-20px_100px_rgba(0,0,0,0.8)] border border-white/10 relative pb-10">
               
               {/* Media Header */}
               <div className="relative w-full h-[40vh] md:h-[50vh] bg-neutral-900 overflow-hidden">
