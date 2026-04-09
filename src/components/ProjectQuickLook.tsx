@@ -43,11 +43,13 @@ const ProjectQuickLook: React.FC<ProjectQuickLookProps> = ({ project, onClose })
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
+          onWheel={() => onClose()}
         >
           {/* Backdrop */}
           <div
             className="absolute inset-0 bg-black/80 backdrop-blur-xl"
             onClick={onClose}
+            onTouchMove={() => onClose()}
           />
 
           {/* Fixed Close Button */}
@@ -74,6 +76,8 @@ const ProjectQuickLook: React.FC<ProjectQuickLookProps> = ({ project, onClose })
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             className="relative w-full max-w-6xl max-h-[90vh] md:h-[85vh] flex justify-center z-10"
             onClick={(e) => e.stopPropagation()}
+            onWheel={(e) => e.stopPropagation()}
+            onTouchMove={(e) => e.stopPropagation()}
           >
             <div className="w-full h-full bg-[#0a0a0a] rounded-[2.5rem] overflow-y-auto hide-scrollbar shadow-[0_-20px_100px_rgba(0,0,0,0.8)] border border-white/10 relative pb-10">
               
